@@ -16,7 +16,18 @@ router.post("/", authMiddleware, async (req, res) => {
                 items: [{ product: productId, quantity }]
             });
         } else {
-            cart.items.push({ product: productId, quantity });
+            // 🔍 check if product already exists
+            const existingItem = cart.items.find(
+                item => item.product.toString() === productId
+            );
+
+            if (existingItem) {
+                // ✅ increase quantity
+                existingItem.quantity += quantity;
+            } else {
+                // ➕ new product
+                cart.items.push({ product: productId, quantity });
+            }
         }
 
         await cart.save();
