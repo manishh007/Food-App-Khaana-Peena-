@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 require("dotenv").config();
 const express = require("express");
+const productRoutes = require("./routes/productRoutes");
 const userRoutes = require("./routes/userRoutes");
 
 const app = express();
@@ -8,6 +9,8 @@ const app = express();
 app.use(express.json());
 
 app.use("/api/users", userRoutes);
+
+app.use("/api/products", productRoutes);
 
 app.get("/", (req, res) => {
     res.send("API running");
