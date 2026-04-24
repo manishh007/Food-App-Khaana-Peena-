@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 require("dotenv").config();
 const express = require("express");
+const orderRoutes = require("./routes/orderRoutes");
 const productRoutes = require("./routes/productRoutes");
 const userRoutes = require("./routes/userRoutes");
 const cartRoutes = require("./routes/cartRoutes");
@@ -12,6 +13,8 @@ app.use(express.json());
 app.use("/api/users", userRoutes);
 
 app.use("/api/products", productRoutes);
+
+app.use("/api/orders", orderRoutes);
 
 app.use("/api/cart", cartRoutes);
 

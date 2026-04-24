@@ -54,4 +54,74 @@ router.get("/", authMiddleware, async (req, res) => {
     }
 });
 
+router.delete("/:productId", authMiddleware, async (req, res) => {
+    try {
+        const cart = await Cart.findOne({ user: req.user.id });
+
+        if (!cart) {
+            return res.status(404).json({ message: "Cart not found" });
+        }
+
+        const item = cart.items.find(
+            item => item.product.toString() === req.params.productId
+        );
+
+        if (!item) {
+            return res.status(404).json({ message: "Item not found" });
+        }
+
+        if (item.quantity > 1) {
+            // 🔽 decrease quantity
+            item.quantity -= 1;
+        } else {
+            // 🗑️ remove item completely
+            cart.items = cart.items.filter(
+                item => item.product.toString() !== req.params.productId
+            );
+        }
+
+        await cart.save();
+
+        res.json(cart);
+
+    } catch (error) {
+        res.status(500).json({ message: "Error updating cart" });
+    }
+});
+
+router.put("/", authMiddleware, async (req, res) => {
+    const { productId, quantity } = req.body;
+
+    try {
+        const cart = await Cart.findOne({ user: req.user.id });
+
+        if (!cart) {
+            return res.status(404).json({ message: "Cart not found" });
+        }
+
+        const item = cart.items.find(
+            item => item.product.toString() === productId
+        );
+
+        if (quantity <= 0) {
+            return res.status(400).json({ message: "Quantity must be at least 1" });
+        }
+
+        if (!item) {
+            return res.status(404).json({ message: "Item not found" });
+        }
+
+
+        // 🔥 update quantity
+        item.quantity = quantity;
+
+        await cart.save();
+
+        res.json(cart);
+
+    } catch (error) {
+        res.status(500).json({ message: "Error updating quantity" });
+    }
+});
+
 module.exports = router;
