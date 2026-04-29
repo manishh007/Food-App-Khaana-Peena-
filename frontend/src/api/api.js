@@ -11,3 +11,23 @@ export const loginUser = async (data) => {
 
     return res.json();
 };
+
+export const getProducts = async () => {
+    const res = await fetch(`${BASE_URL}/api/products`);
+    return res.json();
+};
+
+export const addToCart = async (productId) => {
+    const token = localStorage.getItem("token");
+
+    const res = await fetch(`${BASE_URL}/api/cart`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": token
+        },
+        body: JSON.stringify({ productId })
+    });
+
+    return res.json();
+};

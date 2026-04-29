@@ -1,17 +1,19 @@
 import { useState } from "react";
 import { loginUser } from "../api/api";
+import { useNavigate } from "react-router-dom";
 
 export default function Login() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const navigate = useNavigate();
 
     const handleLogin = async () => {
         const data = await loginUser({ email, password });
-        console.log(data);
 
         if (data.token) {
             localStorage.setItem("token", data.token);
             alert("Login success");
+            navigate("/products");
         } else {
             alert("Login failed");
         }
