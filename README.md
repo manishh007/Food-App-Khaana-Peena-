@@ -143,6 +143,9 @@ npm run dev
 
 ---
 
+## 🚀 Live API
+https://khaana-peena.onrender.com
+
 ## 👨‍💻 Author
 
 Mani
