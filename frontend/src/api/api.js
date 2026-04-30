@@ -26,10 +26,14 @@ export const addToCart = async (productId) => {
             "Content-Type": "application/json",
             "Authorization": token
         },
-        body: JSON.stringify({ productId })
+        body: JSON.stringify({
+            productId,
+            quantity: 1
+        })
     });
 
-    return res.json();
+    const data = await res.json();  // 🔥 important
+    return data;                    // 🔥 return updated cart
 };
 
 export const getCart = async () => {
@@ -54,6 +58,21 @@ export const removeFromCart = async (productId) => {
         }
     });
 
+
+    return res.json();
+};
+
+export const updateCart = async (productId, quantity) => {
+    const token = localStorage.getItem("token");
+
+    const res = await fetch(`${BASE_URL}/api/cart`, {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": token
+        },
+        body: JSON.stringify({ productId, quantity })
+    });
 
     return res.json();
 };

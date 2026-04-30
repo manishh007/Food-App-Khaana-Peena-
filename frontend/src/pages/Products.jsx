@@ -1,16 +1,34 @@
 import { useEffect, useState } from "react";
-import { getProducts, addToCart } from "../api/api";
+import { getProducts, addToCart, getCart } from "../api/api";
 
 export default function Products() {
     const [products, setProducts] = useState([]);
+    const [cartMap, setCartMap] = useState({});
 
     useEffect(() => {
         getProducts().then(setProducts);
     }, []);
 
+    useEffect(() => {
+        getCart().then(data => {
+            const map = {};
+            data.items?.forEach(item => {
+                map[item.product._id] = item.quantity;
+            });
+            setCartMap(map);
+        });
+    }, []);
+
+
     const handleAdd = async (id) => {
-        const res = await addToCart(id);
-        alert("Added to cart");
+        const data = await addToCart(id); // 🔥 updated cart mil gaya
+
+        const map = {};
+        data.items?.forEach((item) => {
+            map[item.product] = item.quantity;
+        });
+
+        setCartMap(map);
     };
 
     return (
@@ -24,6 +42,12 @@ export default function Products() {
                 <div key={p._id}>
                     <h3>{p.name}</h3>
                     <p>₹ {p.price}</p>
+
+                    {/* 🔥 SHOW QUANTITY */}
+                    {cartMap[p._id] && (
+                        <p>In cart: {cartMap[p._id]}</p>
+                    )}
+
                     <button onClick={() => handleAdd(p._id)}>
                         Add to Cart
                     </button>

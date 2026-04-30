@@ -55,37 +55,30 @@ router.get("/", authMiddleware, async (req, res) => {
 });
 
 router.delete("/:productId", authMiddleware, async (req, res) => {
+    const { productId } = req.params;
+
     try {
-        const cart = await Cart.findOne({ user: req.user.id });
+        let cart = await Cart.findOne({ user: req.user.id });
 
         if (!cart) {
             return res.status(404).json({ message: "Cart not found" });
         }
 
-        const item = cart.items.find(
-            item => item.product.toString() === req.params.productId
+        // 🔥 REMOVE ITEM COMPLETELY (no quantity logic)
+        cart.items = cart.items.filter(
+            item => item.product.toString() !== productId
         );
-
-        if (!item) {
-            return res.status(404).json({ message: "Item not found" });
-        }
-
-        if (item.quantity > 1) {
-            // 🔽 decrease quantity
-            item.quantity -= 1;
-        } else {
-            // 🗑️ remove item completely
-            cart.items = cart.items.filter(
-                item => item.product.toString() !== req.params.productId
-            );
-        }
 
         await cart.save();
 
-        res.json(cart);
+        // 🔥 populate again
+        const updatedCart = await Cart.findOne({ user: req.user.id })
+            .populate("items.product");
+
+        res.json(updatedCart);
 
     } catch (error) {
-        res.status(500).json({ message: "Error updating cart" });
+        res.status(500).json({ message: "Error removing item" });
     }
 });
 
