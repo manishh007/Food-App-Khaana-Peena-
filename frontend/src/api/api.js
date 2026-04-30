@@ -76,3 +76,16 @@ export const updateCart = async (productId, quantity) => {
 
     return res.json();
 };
+
+export const placeOrder = async () => {
+    const token = localStorage.getItem("token");
+
+    const res = await fetch(`${BASE_URL}/api/orders`, {
+        method: "POST",
+        headers: {
+            "Authorization": token
+        }
+    });
+
+    return res.json();
+};

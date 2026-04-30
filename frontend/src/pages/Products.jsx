@@ -1,40 +1,28 @@
-import { useEffect, useState } from "react";
-import { getProducts, addToCart, getCart } from "../api/api";
+import { useEffect, useState, useContext } from "react";
+import { getProducts, addToCart } from "../api/api";
+import { CartContext } from "../context/CartContext";
+import { useNavigate } from "react-router-dom";
 
 export default function Products() {
     const [products, setProducts] = useState([]);
-    const [cartMap, setCartMap] = useState({});
+    const { cartMap, refreshCart } = useContext(CartContext);
+    const navigate = useNavigate();
 
     useEffect(() => {
         getProducts().then(setProducts);
+        refreshCart(); // 🔥 always sync
     }, []);
-
-    useEffect(() => {
-        getCart().then(data => {
-            const map = {};
-            data.items?.forEach(item => {
-                map[item.product._id] = item.quantity;
-            });
-            setCartMap(map);
-        });
-    }, []);
-
 
     const handleAdd = async (id) => {
-        const data = await addToCart(id); // 🔥 updated cart mil gaya
-
-        const map = {};
-        data.items?.forEach((item) => {
-            map[item.product] = item.quantity;
-        });
-
-        setCartMap(map);
+        await addToCart(id);
+        refreshCart(); // 🔥 update global state
     };
 
     return (
         <div>
             <h2>Products</h2><br /><br />
-            <button onClick={() => window.location.href = "/cart"}>
+
+            <button onClick={() => navigate("/cart")}>
                 Go to Cart
             </button>
 
@@ -43,8 +31,7 @@ export default function Products() {
                     <h3>{p.name}</h3>
                     <p>₹ {p.price}</p>
 
-                    {/* 🔥 SHOW QUANTITY */}
-                    {cartMap[p._id] && (
+                    {cartMap[p._id] !== undefined && (
                         <p>In cart: {cartMap[p._id]}</p>
                     )}
 
