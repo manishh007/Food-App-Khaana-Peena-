@@ -12,8 +12,14 @@ export default function Login() {
 
         if (data.token) {
             localStorage.setItem("token", data.token);
+            localStorage.setItem("role", data.role);
             alert("Login success");
-            navigate("/products");
+            if (data.role === "admin") {
+                navigate("/admin");
+            } else {
+                navigate("/products");
+            }
+
         } else {
             alert("Login failed");
         }
