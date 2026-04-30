@@ -20,26 +20,48 @@ export default function Products() {
 
     return (
         <div>
-            <h2>Products</h2><br /><br />
+            <h2 className="text-3xl font-bold mb-6">Products</h2>
 
-            <button onClick={() => navigate("/cart")}>
-                Go to Cart
-            </button>
+            <div className="flex gap-4 mb-6">
+                <button
+                    onClick={() => navigate("/cart")}
+                    className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded"
+                >
+                    Cart
+                </button>
 
-            {products.map((p) => (
-                <div key={p._id}>
-                    <h3>{p.name}</h3>
-                    <p>₹ {p.price}</p>
+                <button
+                    onClick={() => navigate("/orders")}
+                    className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded"
+                >
+                    Orders
+                </button>
+            </div>
 
-                    {cartMap[p._id] !== undefined && (
-                        <p>In cart: {cartMap[p._id]}</p>
-                    )}
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+                {products.map((p) => (
+                    <div
+                        key={p._id}
+                        className="bg-white p-4 rounded-xl shadow hover:shadow-lg transition"
+                    >
+                        <h3 className="text-lg font-semibold">{p.name}</h3>
+                        <p className="text-gray-500">₹ {p.price}</p>
 
-                    <button onClick={() => handleAdd(p._id)}>
-                        Add to Cart
-                    </button>
-                </div>
-            ))}
+                        {cartMap[p._id] !== undefined && (
+                            <p className="text-green-600 text-sm mt-1">
+                                In cart: {cartMap[p._id]}
+                            </p>
+                        )}
+
+                        <button
+                            onClick={() => handleAdd(p._id)}
+                            className="mt-3 w-full bg-black text-white py-2 rounded hover:bg-gray-800"
+                        >
+                            Add to Cart
+                        </button>
+                    </div>
+                ))}
+            </div>
         </div>
     );
 }

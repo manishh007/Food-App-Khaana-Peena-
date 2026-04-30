@@ -89,3 +89,42 @@ export const placeOrder = async () => {
 
     return res.json();
 };
+
+export const getMyOrders = async () => {
+    const token = localStorage.getItem("token");
+
+    const res = await fetch(`${BASE_URL}/api/orders/my-orders`, {
+        headers: {
+            Authorization: token
+        }
+    });
+
+    return res.json();
+};
+
+export const getAllOrders = async () => {
+    const token = localStorage.getItem("token");
+
+    const res = await fetch(`${BASE_URL}/api/orders`, {
+        headers: {
+            Authorization: token
+        }
+    });
+
+    return res.json();
+};
+
+export const updateOrderStatus = async (id, status) => {
+    const token = localStorage.getItem("token");
+
+    const res = await fetch(`${BASE_URL}/api/orders/${id}`, {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: token
+        },
+        body: JSON.stringify({ status })
+    });
+
+    return res.json();
+};

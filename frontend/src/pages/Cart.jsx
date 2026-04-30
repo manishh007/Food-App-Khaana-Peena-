@@ -61,28 +61,62 @@ export default function Cart() {
 
     return (
         <div>
-            <h2>Your Cart</h2>
-            <button onClick={() => navigate("/products")}>
-                ⬅ Back to Products
+            <h2 className="text-3xl font-bold mb-6">🛒 Your Cart</h2>
+
+            <button
+                onClick={() => navigate("/products")}
+                className="mb-4 text-blue-500"
+            >
+                ⬅ Back
             </button>
 
-            {cart.map((item) => (
-                <div key={item.product._id || item.product}>
-                    <h3>{item.product?.name}</h3>
-                    <p>₹ {item.product.price}</p>
-                    <p >
-                        Qty: {item.quantity}
-                        <button onClick={() => handleIncrease(item)}> + </button>
-                        <button onClick={() => handleDecrease(item)}> - </button>
-                    </p>
+            {cart.length === 0 && (
+                <p className="text-gray-500">Cart is empty</p>
+            )}
 
-                    <button onClick={() => handleRemove(item.product._id)}>
-                        Remove
-                    </button>
-                </div>
-            ))}
-            <br />
-            <button onClick={handleOrder}>
+            <div className="space-y-4">
+                {cart.map((item) => (
+                    <div
+                        key={item.product._id}
+                        className="bg-white p-4 rounded-xl shadow flex justify-between items-center"
+                    >
+                        <div>
+                            <h3 className="font-semibold">{item.product.name}</h3>
+                            <p className="text-gray-500">₹ {item.product.price}</p>
+                        </div>
+
+                        <div className="flex items-center gap-2">
+                            <button
+                                onClick={() => handleDecrease(item)}
+                                className="px-3 py-1 bg-gray-200 rounded"
+                            >
+                                -
+                            </button>
+
+                            <span>{item.quantity}</span>
+
+                            <button
+                                onClick={() => handleIncrease(item)}
+                                className="px-3 py-1 bg-gray-200 rounded"
+                            >
+                                +
+                            </button>
+                        </div>
+
+                        <button
+                            onClick={() => handleRemove(item.product._id)}
+                            className="text-red-500"
+                        >
+                            Remove
+                        </button>
+                    </div>
+                ))}
+            </div>
+
+            <button
+                onClick={handleOrder}
+                className="mt-6 bg-green-500 text-white px-6 py-2 rounded hover:bg-green-600"
+            >
                 Place Order
             </button>
         </div>
