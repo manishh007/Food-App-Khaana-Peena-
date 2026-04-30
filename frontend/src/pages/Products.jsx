@@ -15,7 +15,10 @@ export default function Products() {
 
     return (
         <div>
-            <h2>Products</h2>
+            <h2>Products</h2><br /><br />
+            <button onClick={() => window.location.href = "/cart"}>
+                Go to Cart
+            </button>
 
             {products.map((p) => (
                 <div key={p._id}>

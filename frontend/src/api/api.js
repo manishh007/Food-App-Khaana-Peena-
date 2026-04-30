@@ -31,3 +31,29 @@ export const addToCart = async (productId) => {
 
     return res.json();
 };
+
+export const getCart = async () => {
+    const token = localStorage.getItem("token");
+
+    const res = await fetch(`${BASE_URL}/api/cart`, {
+        headers: {
+            "Authorization": token
+        }
+    });
+
+    return res.json();
+};
+
+export const removeFromCart = async (productId) => {
+    const token = localStorage.getItem("token");
+
+    const res = await fetch(`${BASE_URL}/api/cart/${productId}`, {
+        method: "DELETE",
+        headers: {
+            "Authorization": token
+        }
+    });
+
+
+    return res.json();
+};
