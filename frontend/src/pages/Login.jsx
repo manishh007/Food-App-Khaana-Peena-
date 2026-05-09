@@ -23,6 +23,7 @@ export default function Login() {
         } else {
             alert("Login failed");
         }
+        console.log(data);
     };
 
     return (
