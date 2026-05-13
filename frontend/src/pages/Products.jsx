@@ -3,6 +3,12 @@ import { getProducts, addToCart } from "../api/api";
 import { CartContext } from "../context/CartContext";
 import { useNavigate } from "react-router-dom";
 
+// 🔥 import images
+import burgerImg from "../assets/Burger.jpg";
+import pizzaImg from "../assets/pizza.jpg";
+import pastaImg from "../assets/pasta.jpg";
+import momoImg from "../assets/momos.jpg";
+
 export default function Products() {
     const [products, setProducts] = useState([]);
     const { cartMap, refreshCart } = useContext(CartContext);
@@ -10,16 +16,24 @@ export default function Products() {
 
     useEffect(() => {
         getProducts().then(setProducts);
-        refreshCart(); // 🔥 always sync
+        refreshCart();
     }, []);
 
     const handleAdd = async (id) => {
         await addToCart(id);
-        refreshCart(); // 🔥 update global state
+        refreshCart();
+    };
+
+    // 🔥 image mapping
+    const productImages = {
+        Burger: burgerImg,
+        Pizza: pizzaImg,
+        Pasta: pastaImg,
+        Momo: momoImg
     };
 
     return (
-        <div>
+        <div className="max-w-7xl mx-auto p-6">
             <h2 className="text-3xl font-bold mb-6">Products</h2>
 
             <div className="flex gap-4 mb-6">
@@ -38,27 +52,37 @@ export default function Products() {
                 </button>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
                 {products.map((p) => (
                     <div
                         key={p._id}
-                        className="bg-white p-4 rounded-xl shadow hover:shadow-lg transition"
+                        className="bg-white rounded-xl shadow hover:shadow-xl transition overflow-hidden"
                     >
-                        <h3 className="text-lg font-semibold">{p.name}</h3>
-                        <p className="text-gray-500">₹ {p.price}</p>
+                        {/* Product Image */}
+                        <img
+                            src={productImages[p.name]}
+                            alt={p.name}
+                            className="w-full h-56 object-contain bg-white p-2"
+                        />
 
-                        {cartMap[p._id] !== undefined && (
-                            <p className="text-green-600 text-sm mt-1">
-                                In cart: {cartMap[p._id]}
-                            </p>
-                        )}
+                        <div className="p-4">
+                            <h3 className="text-lg font-semibold">{p.name}</h3>
+                            <p className="text-gray-500">₹ {p.price}</p><br />
+                            <p className="text-gray-500">{p.description}</p>
 
-                        <button
-                            onClick={() => handleAdd(p._id)}
-                            className="mt-3 w-full bg-black text-white py-2 rounded hover:bg-gray-800"
-                        >
-                            Add to Cart
-                        </button>
+                            {cartMap[p._id] !== undefined && (
+                                <p className="text-green-600 text-sm mt-1">
+                                    In cart: {cartMap[p._id]}
+                                </p>
+                            )}
+
+                            <button
+                                onClick={() => handleAdd(p._id)}
+                                className="mt-3 w-full bg-black text-white py-2 rounded hover:bg-gray-800"
+                            >
+                                Add to Cart
+                            </button>
+                        </div>
                     </div>
                 ))}
             </div>
