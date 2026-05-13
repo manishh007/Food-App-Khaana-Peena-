@@ -6,12 +6,14 @@ import { CartProvider } from "./context/CartContext";
 import OrderHistory from "./pages/OrderHistory";
 import AdminDashboard from "./pages/AdminDashboard";
 
+
+
 function App() {
   return (
     <CartProvider>
       <BrowserRouter>
         <div className="min-h-screen bg-gray-100">
-          <div className="max-w-6xl mx-auto p-6">
+          <div className="max-w-10xl mx-auto p-6">
             {<Routes>
               <Route path="/" element={<Login />} />
               <Route path="/products" element={<Products />} />
