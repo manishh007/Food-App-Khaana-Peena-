@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { getAllOrders, updateOrderStatus } from "../api/api";
+import Navbar from "../components/Navbar";
 
 export default function AdminDashboard() {
     const [orders, setOrders] = useState([]);
@@ -20,6 +21,7 @@ export default function AdminDashboard() {
     return (
         <div>
             <h2 className="text-3xl font-bold mb-6">⚙️ Admin Dashboard</h2>
+            <Navbar />
 
             <div className="space-y-4">
                 {orders.map((order) => (
@@ -29,8 +31,8 @@ export default function AdminDashboard() {
                         <p className="font-semibold">
                             Status:
                             <span className={`ml-2 ${order.status === "Pending" ? "text-yellow-500" :
-                                    order.status === "Preparing" ? "text-blue-500" :
-                                        "text-green-500"
+                                order.status === "Preparing" ? "text-blue-500" :
+                                    "text-green-500"
                                 }`}>
                                 {order.status}
                             </span>

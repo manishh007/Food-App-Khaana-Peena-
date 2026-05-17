@@ -1,5 +1,8 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Login from "./pages/Login";
+import Signup from "./pages/Signup";
+import ForgotPassword from "./pages/ForgotPassword";
+import Navbar from "./components/Navbar";
 import Products from "./pages/Products";
 import Cart from "./pages/Cart";
 import { CartProvider } from "./context/CartContext";
@@ -14,8 +17,11 @@ function App() {
       <BrowserRouter>
         <div className="min-h-screen bg-gray-100">
           <div className="max-w-7.5xl mx-auto p-6">
+
             {<Routes>
               <Route path="/" element={<Login />} />
+              <Route path="/signup" element={<Signup />} />
+              <Route path="/forgot-password" element={<ForgotPassword />} />
               <Route path="/products" element={<Products />} />
               <Route path="/cart" element={<Cart />} />
               <Route path="/orders" element={<OrderHistory />} />

@@ -1,4 +1,5 @@
 import { useEffect, useState, useContext } from "react";
+import Navbar from "../components/Navbar";
 import { getCart, removeFromCart, updateCart } from "../api/api";
 import { useNavigate } from "react-router-dom";
 import { CartContext } from "../context/CartContext";
@@ -61,13 +62,15 @@ export default function Cart() {
 
     return (
         <div>
+            <Navbar />
+
             <h2 className="text-3xl font-bold mb-6">🛒 Your Cart</h2>
 
             <button
                 onClick={() => navigate("/products")}
                 className="mb-4 text-blue-500"
             >
-                ⬅ Back
+                Add something, Explore Menu
             </button>
 
             {cart.length === 0 && (
@@ -119,6 +122,14 @@ export default function Cart() {
             >
                 Place Order
             </button>
+
+            <button
+                onClick={() => navigate("/products")}
+                className="mb-4 bg-blue-500  text-white px-6 py-2 rounded hover:bg-blue-600 m-3"
+            >
+                ⬅ Back
+            </button>
+
         </div>
     );
 }

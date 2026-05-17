@@ -1,5 +1,6 @@
 import { useEffect, useState, useContext } from "react";
 import { getProducts, addToCart } from "../api/api";
+import Navbar from "../components/Navbar";
 import { CartContext } from "../context/CartContext";
 import { useNavigate } from "react-router-dom";
 
@@ -33,11 +34,13 @@ export default function Products() {
     };
 
     return (
+
         <div className="max-w-7xl mx-auto p-6">
             <h2 className="text-3xl font-bold mb-6">Products</h2>
+            <Navbar />
 
             <div className="flex gap-4 mb-6">
-                <button
+                {/* <button
                     onClick={() => navigate("/cart")}
                     className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded"
                 >
@@ -49,10 +52,10 @@ export default function Products() {
                     className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded"
                 >
                     Orders
-                </button>
+                </button> */}
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 flex-auto">
                 {products.map((p) => (
                     <div
                         key={p._id}

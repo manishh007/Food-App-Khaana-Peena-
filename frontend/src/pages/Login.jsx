@@ -31,7 +31,7 @@ export default function Login() {
 
                 <div className="text-center mb-8">
                     <h1 className="text-3xl font-bold text-gray-800">
-                        Welcome Back 👋
+                        Hii Foodie! 👋
                     </h1>
                     <p className="text-gray-500 mt-2">
                         Login to continue ordering your favorite food
@@ -56,18 +56,30 @@ export default function Login() {
                         className="w-full px-4 py-3 border border-gray-300 rounded-xl outline-none focus:ring-2 focus:ring-black"
                     />
 
+                    <p
+                        onClick={() => navigate("/forgot-password")}
+                        className="text-sm text-right text-blue-500 cursor-pointer font-bold"
+                    >
+                        Forgot Password?
+                    </p>
+
                     <button
                         onClick={handleLogin}
                         className="w-full bg-black text-white py-3 rounded-xl font-semibold hover:bg-gray-800 transition duration-300"
                     >
                         Login
                     </button>
+                    <p className="text-center text-sm text-gray-500 mt-6">
+                        Don't have an account?
+                        <span
+                            onClick={() => navigate("/signup")}
+                            className="text-black font-semibold cursor-pointer ml-1"
+                        >
+                            Signup
+                        </span>
+                    </p>
 
                 </div>
-
-                <p className="text-center text-sm text-gray-500 mt-6">
-                    Demo credentials available for testing
-                </p>
 
             </div>
         </div>
