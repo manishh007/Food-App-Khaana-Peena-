@@ -18,7 +18,7 @@ export default function Signup() {
 
         if (data._id || data.message === "User registered successfully") {
             alert("Signup successful 🎉");
-            navigate("/login");
+            navigate("/");
         } else {
             alert(data.message || "Signup failed");
         }

@@ -74,7 +74,7 @@ export default function Cart() {
             </button>
 
             {cart.length === 0 && (
-                <p className="text-gray-500">Cart is empty</p>
+                <p className="text-gray-600">Cart is empty</p>
             )}
 
             <div className="space-y-4">
